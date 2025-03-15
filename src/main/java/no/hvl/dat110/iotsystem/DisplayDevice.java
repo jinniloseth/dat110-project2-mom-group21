@@ -1,9 +1,12 @@
 package no.hvl.dat110.iotsystem;
 
+import no.hvl.dat110.broker.Dispatcher;
+import no.hvl.dat110.broker.Storage;
 import no.hvl.dat110.client.Client;
-import no.hvl.dat110.messages.Message;
-import no.hvl.dat110.messages.PublishMsg;
 import no.hvl.dat110.common.TODO;
+import no.hvl.dat110.messages.CreateTopicMsg;
+import no.hvl.dat110.messages.Message;
+import no.hvl.dat110.messages.SubscribeMsg;
 
 public class DisplayDevice {
 	
@@ -26,9 +29,25 @@ public class DisplayDevice {
 		
 		// TODO - END
 		
-		System.out.println("Display stopping ... ");
+		Client display = new Client("display", Common.BROKERHOST, Common.BROKERPORT);
 		
-		throw new UnsupportedOperationException(TODO.method());
+		display.connect();
+		
+		display.createTopic("temperature");
+		
+		display.subscribe("temperature");
+
+		for (int i = 0; i < COUNT; i++) {
+			Message msg = display.receive();
+		    System.out.println("Received: " + msg.toString());
+		}
+
+		display.unsubscribe("temperature");
+		
+		display.disconnect();
+		
+		
+		System.out.println("Display stopping ... ");
 		
 	}
 }

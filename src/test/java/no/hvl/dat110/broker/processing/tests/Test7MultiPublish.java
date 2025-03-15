@@ -53,6 +53,7 @@ public class Test7MultiPublish extends Test0Base {
 		PublishMsg msg1 = (PublishMsg) client1.receive();
 		PublishMsg msg2 = (PublishMsg) client2.receive();
 
+
 		client1.disconnect();
 		client2.disconnect();
 
